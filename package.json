@@ -20,5 +20,17 @@
 		"clipboardy": "^2.3.0",
 		"nodesite.eu": "^1.2.0-6",
 		"nslibmgr": "^0.1.0"
-	}
+	},
+	"directories": {
+		"lib": "lib",
+		"test": "tests"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/prokopschield/nspub.git"
+	},
+	"bugs": {
+		"url": "https://github.com/prokopschield/nspub/issues"
+	},
+	"homepage": "https://github.com/prokopschield/nspub#readme"
 }
