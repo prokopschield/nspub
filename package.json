@@ -1,7 +1,7 @@
 {
 	"name": "nspub",
 	"description": "Publish your work on nodesite.eu",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"main": "lib/nspub.js",
 	"bin": {
 		"nspub": "lib/cli.js"
@@ -18,8 +18,8 @@
 	"keywords": [],
 	"dependencies": {
 		"clipboardy": "^2.3.0",
-		"nodesite.eu": "^1.2.0-6",
-		"nslibmgr": "^0.1.0"
+		"nodesite.eu": "^1.2.0-8",
+		"nslibmgr": "^0.1.1"
 	},
 	"directories": {
 		"lib": "lib",

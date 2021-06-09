@@ -1,7 +1,14 @@
 const { blake2sHex } = require('blakejs');
+import { getConfig } from 'doge-config';
 import fs from 'fs';
 import { direct, NodeSiteClient, rawwrite } from 'nodesite.eu';
 import path from 'path';
+
+const config = getConfig('nspub', {
+	size_limit: 1 << 24,
+});
+
+const { size_limit } = config.num;
 
 const ready = NodeSiteClient.init();
 
@@ -10,7 +17,11 @@ export class nspub {
 		ready.then(callback);
 	}
 	public static hashmap = new Map<string, string>();
-	public static async blob (data: Buffer | string): Promise<string> {
+	public static async blob (data: Buffer | string, file?: string): Promise<string> {
+		if (data.length > size_limit) {
+			console.log(`${file} was too large.`);
+			throw new Error('File too large.');
+		}
 		const blake = blake2sHex(data);
 		const prehash = nspub.hashmap.get(blake);
 		if (prehash) return prehash;
@@ -18,32 +29,39 @@ export class nspub {
 			rawwrite('blake2hash', blake);
 			direct()?.once(blake, (hash?: string) => {
 				if (hash) {
+					nspub.hashmap.set(blake, hash);
 					return resolve(hash);
 				} else {
 					rawwrite('blob2hash', blake, data);
-					direct()?.once(blake, (hash: string) => resolve(hash));
+					direct()
+					?.once(blake, (hash: string) => resolve(hash))
+					?.once(blake, (hash: string) => nspub.hashmap.set(blake, hash))
 				}
 			});
 		});
 	}
-	public static async file (file: string): Promise<string> {
+	public static async file (file: string, dir: string): Promise<string> {
 		const data = await fs.promises.readFile(file);
-		return await nspub.blob(data);
+		return await nspub.blob(data, path.relative(dir, file));
 	}
 	public static async dir (dir: string): Promise<string> {
 		const read = await fs.promises.readdir(dir);
 		const hashed = await Promise.all(read.map(async fname => {
-			const pname = path.resolve(dir, fname);
-			const stat = await fs.promises.stat(pname);
-			if (stat.isDirectory()) {
-				return `${await nspub.dir(pname)}.html`
-			} else if (stat.isFile()) {
-				return `${await nspub.file(pname)}/${fname}`
-			} else return null;
+			try {
+				const pname = path.resolve(dir, fname);
+				const stat = await fs.promises.stat(pname);
+				if (stat.isDirectory()) {
+					return `${await nspub.dir(pname)}.html`
+				} else if (stat.isFile()) {
+					return `${await nspub.file(pname, dir)}/${fname}`
+				} else return null;
+			} catch (error) {
+				return null;
+			}
 		}));
 		let ret = `<h1>${path.basename(dir)}</h1><ul>`;
 		for (let i=0; i < hashed.length; ++i) {
-			i && (ret += `<li><a href="/static/${hashed[i]}">${read[i]}</a></li>`);
+			hashed[i] && (ret += `<li><a href="/static/${hashed[i]}">${read[i]}</a></li>`);
 		}
 		ret += '</ul>';
 		return nspub.blob(ret);
