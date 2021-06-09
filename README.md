@@ -1,6 +1,6 @@
 # nspub
 
-Uploads the current directory, with all files and sub-directories, as well as indexes thereof, to [NodeSite.eu](<https://nodesite.eu/>)
+Uploads any directory, with all files and sub-directories, as well as indexes thereof, to [NodeSite.eu](<https://nodesite.eu/>)
 
 Usage: `npx nspub`
 
