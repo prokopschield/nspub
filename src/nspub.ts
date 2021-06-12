@@ -10,7 +10,7 @@ const config = getConfig('nspub', {
 
 const { size_limit } = config.num;
 
-const ready = NodeSiteClient.init();
+const ready = NodeSiteClient.ready;
 
 export class nspub {
 	public static ready (callback: () => void) {

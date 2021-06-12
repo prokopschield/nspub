@@ -185,10 +185,10 @@ node-fetch@^2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-nodesite.eu@^1.2.0-8:
-  version "1.2.0-8"
-  resolved "https://registry.yarnpkg.com/nodesite.eu/-/nodesite.eu-1.2.0-8.tgz#1d404e4e6bc9085fc5da1f82a73cc7157fca65d4"
-  integrity sha512-Ifx6jXwP2t2k7bLOXuGu/3/EOwxsPcyiomdMaNl5eOoKLd3XYEwzDQCj6V93PVD58Ie7M50bQ7VdHEExHmC7zw==
+nodesite.eu@^1.2.0-9:
+  version "1.2.0-9"
+  resolved "https://registry.yarnpkg.com/nodesite.eu/-/nodesite.eu-1.2.0-9.tgz#22b9ed8f56af4fdbe6a5d481df316a1f24963f6b"
+  integrity sha512-KN5XVYMieRXovXOBIrdocm5c/8FQJsf7rZ6Cs8BOlwtDsaFwh/Zi+1OeDpUnhNZDM51B7euq055N/N5DIerYzw==
   dependencies:
     blakejs "^1.1.0"
     doge-config "^0.3.0-3"
