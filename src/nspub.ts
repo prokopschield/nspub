@@ -40,9 +40,9 @@ export class nspub {
 			});
 		});
 	}
-	public static async file (file: string, dir: string): Promise<string> {
+	public static async file (file: string, dir?: string): Promise<string> {
 		const data = await fs.promises.readFile(file);
-		return await nspub.blob(data, path.relative(dir, file));
+		return await nspub.blob(data, dir && path.relative(dir, file));
 	}
 	public static async dir (dir: string): Promise<string> {
 		const read = await fs.promises.readdir(dir);
