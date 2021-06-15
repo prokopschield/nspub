@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import ask from 'nslibmgr/lib/ask'
-import clipboardy from 'clipboardy';
+import { copy, paste } from 'copy-paste';
 import fs from 'fs'
 import nspub from './nspub'
 import path from 'path';
@@ -14,7 +14,9 @@ import path from 'path';
 				let dir = '';
 
 				do {
-					dir = process.argv.pop() || (await ask('Drag-and-drop directory!')) || await clipboardy.read()
+					dir = process.argv.pop()
+						|| (await ask('Drag-and-drop directory!'))
+						|| (await new Promise (resolve => paste((error, content) => resolve(content))))
 					if (!fs.existsSync(dir)) {
 						try {
 							dir = eval(dir);
@@ -28,7 +30,10 @@ import path from 'path';
 					console.log(`Finished: ${dir}`);
 					const link = `https://nspub.nodesite.eu/static/${hash}.html`;
 					console.log(link);
-					clipboardy.write(link).then(() => console.log('Copied to clipboard!')).then(resolve);
+					(new Promise ((resolve, reject) => copy(link, (error) => error ? reject(error) : resolve(error))))
+					.then(() => console.log('Copied to clipboard!'))
+					.catch(() => console.log('Error while copying to clipboard.'))
+					.then(resolve);
 				}))
 			});
 			cont = (await ask('Upload another? (yes/no)'))?.toLocaleLowerCase()[0] === 'y';
