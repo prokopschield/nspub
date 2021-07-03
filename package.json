@@ -1,7 +1,7 @@
 {
 	"name": "nspub",
 	"description": "Publish your work on nodesite.eu",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"main": "lib/nspub.js",
 	"bin": {
 		"nspub": "lib/cli.js"

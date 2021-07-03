@@ -28,17 +28,23 @@ export class nspub {
 		const blake = blake2sHex(data);
 		const prehash = nspub.hashmap.get(blake);
 		if (prehash) return prehash;
-		return new Promise((resolve) => {
-			rawwrite('blake2hash', blake);
-			direct()?.once(blake, (hash?: string) => {
+		return new Promise(async (resolve) => {
+			const socket = await ready;
+			socket.emit('blake2hash', blake).once(blake, (hash?: string) => {
 				if (hash) {
 					nspub.hashmap.set(blake, hash);
 					return resolve(hash);
 				} else {
 					rawwrite('blob2hash', blake, data);
-					direct()
-						?.once(blake, (hash: string) => resolve(hash))
-						?.once(blake, (hash: string) => nspub.hashmap.set(blake, hash));
+					function resolver(hash?: string) {
+						if (hash) {
+							resolve(hash);
+							nspub.hashmap.set(blake, hash);
+						} else {
+							socket.once(blake, resolver);
+						}
+					}
+					resolver();
 				}
 			});
 		});
