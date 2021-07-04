@@ -177,6 +177,11 @@ prompts@^2.4.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
+serial-async-io@^0.1.0-1:
+  version "0.1.0-1"
+  resolved "https://registry.yarnpkg.com/serial-async-io/-/serial-async-io-0.1.0-1.tgz#5cb7326ffffc2dd7446b9c004dc2db534c58ce4e"
+  integrity sha512-+V/tLjE2AtrBbqwAUIgk6Zpo7JAr9SbrYnSfjiUJcb3W1ucmwh96NNZZduU/9JDZuADH+jBvu4Osl1RMb4C7RQ==
+
 sisteransi@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"

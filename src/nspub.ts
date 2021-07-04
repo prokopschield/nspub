@@ -3,6 +3,7 @@ import { getConfig } from 'doge-config';
 import fs from 'fs';
 import { direct, NodeSiteClient, rawwrite } from 'nodesite.eu';
 import path from 'path';
+import { read } from 'serial-async-io';
 
 const config = getConfig('nspub', {
 	size_limit: 1 << 24,
@@ -50,7 +51,7 @@ export class nspub {
 		});
 	}
 	public static async file(file: string, dir?: string): Promise<string> {
-		const data = await fs.promises.readFile(file);
+		const data = await read(file);
 		return await nspub.blob(data, dir && path.relative(dir, file));
 	}
 	public static async dir(dir: string): Promise<string> {
